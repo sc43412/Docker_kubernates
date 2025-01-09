@@ -1,0 +1,31 @@
+docker
+docker images # for all images
+docker ps # for all ps container
+docker kill <container id>
+docker rmi images <images delete> --force
+
+FROM python:3.11-slim
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+WORKDIR /app
+# FIRST . IS LOCAL DIRECTORY SECOND ONE IS WORKING DIRECOTORY OF DOCKER 
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver","0.0.0.0:8000"]
+
+docker build -t <project name>:<version> . 
+docker run -p 8000:3000 -d stem_proj:1.0 -e DATABASE URL="MONGO"
+docker exec -it 48f373784032 /bin/bash
+docker volume create volume_database
+docker run -v volume_database:/data/db -p 27017:27017 mongo
+docker build -t image_tag .
+docker network create my_custom_network
+docker run -d -p 3000:3000 --name backend --network my_custom_network image_tag
+docker run -d -v volume_database:/data/db --name mongo --network my_custom_network -p 27017:27017 mongo
+docker logs <container_id>
+
+docker run --name my-redis -d -p 6379:6379 redis
+docker exec -it container_id /bin/bash
+redis-cli
