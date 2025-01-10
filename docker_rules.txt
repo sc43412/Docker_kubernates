@@ -29,3 +29,6 @@ docker logs <container_id>
 docker run --name my-redis -d -p 6379:6379 redis
 docker exec -it container_id /bin/bash
 redis-cli
+
+docker-compose up 
+docker-compose up --build -d
